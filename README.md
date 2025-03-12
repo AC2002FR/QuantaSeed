@@ -27,3 +27,15 @@ chmod +x quantum_entropy.py
 ```sh
 python quantum_entropy.py --length 50
 ```
+
+## 🛠 Example Output : 
+```sh
+vNz8Yg3KdAq+LpZbT1xJRm5HWUeoF2Xs
+```
+## 🛡️ Why QuantaSeed ? 
+Unlike pseudo-random number generators (PRNGs), QuantaSeed directly sources randomness from quantum physics, ensuring high entropy for cryptographic applications.
+
+## 🏗️ Contributing
+Want to improve the project? Feel free to fork and submit pull requests! 🚀
+
+
