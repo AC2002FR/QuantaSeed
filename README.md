@@ -15,3 +15,15 @@ It ensures **high-quality randomness** for cryptographic security, password gene
 ```sh
 git clone https://github.com/AC2002FR/QuantaSeed.git
 cd QuantaSeed
+```
+
+## 🚀 Run the script
+### Linux/MacOS :
+```sh
+chmod +x quantum_entropy.py
+./quantum_entropy.py --length 50
+```
+### Windows : 
+```sh
+python quantum_entropy.py --length 50
+```
