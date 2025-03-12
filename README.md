@@ -1,1 +1,1 @@
-# quantum_entropy
+# QuantaSeed 🌱🔬 (Quantum-generated entropy for cryptographic security)
