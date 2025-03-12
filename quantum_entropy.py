@@ -1,9 +1,23 @@
 #!/usr/bin/env python3
 import argparse
-import requests
 import sys
 import string
 import os
+
+# Vérification des modules nécessaires
+REQUIRED_MODULES = ["requests", "pyperclip"]
+
+for module in REQUIRED_MODULES:
+    try:
+        __import__(module)
+    except ImportError:
+        print(f"⚠️ Le module '{module}' n'est pas installé.")
+        print(f"💡 Exécutez la commande suivante pour l'installer :")
+        print(f"   pip install {module}")
+        sys.exit(1)
+
+# Importation après vérification
+import requests
 import pyperclip
 
 # Définition des URLs des APIs quantiques
