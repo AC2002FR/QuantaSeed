@@ -3,22 +3,44 @@ import argparse
 import requests
 import sys
 import string
+import random
+import time
 
-QRNG_API_URL = "https://qrng.ethz.ch/api/randbytes"
+# Définition des URLs des APIs
+APIS = {
+    "ETH Zürich": "https://qrng.ethz.ch/api/randbytes",
+    "ANU QRNG": "https://qrng.anu.edu.au/API/jsonI.php?length={}&type=uint8",
+    "Random.org": "https://www.random.org/integers/?num={}&min=0&max=255&col=1&base=10&format=plain&rnd=new"
+}
 
 def fetch_quantum_random_numbers(n: int):
     """
-    Récupère des nombres aléatoires issus d'un générateur quantique.
-    Utilise l'API QRNG ETH Zürich, qui génère de l'entropie basée sur un phénomène quantique.
+    Essaie d'obtenir des nombres aléatoires à partir de plusieurs sources quantiques.
+    Si une API ne répond pas, passe à la suivante.
     """
-    try:
-        response = requests.get(QRNG_API_URL, params={"size": n}, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        return data["data"]
-    except requests.exceptions.RequestException as e:
-        print(f"Erreur : Impossible de récupérer l'entropie quantique ({e})", file=sys.stderr)
-        sys.exit(1)
+    for name, url in APIS.items():
+        try:
+            print(f"🔄 Tentative avec {name}...")
+            if "ethz.ch" in url:
+                response = requests.get(url, params={"size": n}, timeout=5)
+                response.raise_for_status()
+                data = response.json()
+                return data["data"]
+            elif "anu.edu.au" in url:
+                response = requests.get(url.format(n), timeout=5)
+                response.raise_for_status()
+                data = response.json()
+                return data["data"]
+            elif "random.org" in url:
+                response = requests.get(url.format(n), timeout=5)
+                response.raise_for_status()
+                return [int(x) for x in response.text.strip().split()]
+        except requests.exceptions.RequestException as e:
+            print(f"⚠️ {name} est inaccessible ({e})")
+
+    # Si toutes les APIs échouent, générer une entropie locale (fallback)
+    print("❌ Aucune API quantique disponible, utilisation de os.urandom()")
+    return list(os.urandom(n))
 
 def generate_quantum_entropy_string(length: int) -> str:
     """
@@ -31,7 +53,7 @@ def generate_quantum_entropy_string(length: int) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Générateur d'entropie quantique via QRNG ETH Zürich."
+        description="Générateur d'entropie quantique via 3 sources de QRNG."
     )
     parser.add_argument(
         "-l", "--length",
@@ -45,7 +67,7 @@ def main():
         parser.error("La longueur doit être un entier positif supérieur à 0.")
 
     random_string = generate_quantum_entropy_string(args.length)
-    print(random_string)
+    print(f"🔑 Entropie générée : {random_string}")
 
 if __name__ == "__main__":
     main()
