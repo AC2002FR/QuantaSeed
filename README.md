@@ -33,11 +33,11 @@ pip install -r requirements.txt
 ### Linux/MacOS :
 ```sh
 chmod +x quantaseed.py
-./quantaseed.py --length 50
+./quantaseed.py
 ```
 ### Windows : 
 ```sh
-python quantaseed.py --length 50
+python quantaseed.py
 ```
 
 ## 🛠 Example Output : 
