@@ -34,7 +34,7 @@ ANU_QRNG_API = "https://qrng.anu.edu.au/API/jsonI.php?length={}&type=uint8"
 
 def check_last_execution():
     """
-    Vérifie si le script a été exécuté avec `-l` ou `--length` dans les 75 dernières secondes.
+    Vérifie si le script a été exécuté avec `-l` ou `--length` dans les 90 dernières secondes.
     """
     if LOCKFILE.exists():
         try:
